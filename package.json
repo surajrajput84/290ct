@@ -1,0 +1,24 @@
+{
+  "name": "birthday-surprise-website",
+  "version": "1.0.0",
+  "description": "An interactive, responsive birthday surprise website with cake, candles, memory quiz, video unlocks, and music.",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "serve": "npx serve ."
+  },
+  "devDependencies": {
+    "vite": "^6.0.0"
+  },
+  "keywords": [
+    "birthday",
+    "surprise",
+    "interactive",
+    "quiz",
+    "video-unlocks",
+    "confetti"
+  ],
+  "author": "",
+  "license": "MIT"
+}

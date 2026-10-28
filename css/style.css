@@ -1,0 +1,298 @@
+/* ==========================================================================
+   BIRTHDAY SURPRISE WEBSITE - CORE STYLES & DESIGN SYSTEM
+   Matches exact 12-board layout, responsive, direct scene presentation
+   ========================================================================== */
+
+:root {
+  /* Color Tokens */
+  --primary-pink: #ff4985;
+  --primary-pink-glow: rgba(255, 73, 133, 0.45);
+  --purple-main: #8c42f6;
+  --purple-glow: rgba(140, 66, 246, 0.4);
+  --gold-accent: #ffb703;
+  --gold-glow: rgba(255, 183, 3, 0.45);
+  --success-green: #10b981;
+  --success-glow: rgba(16, 185, 129, 0.35);
+
+  /* Fonts */
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-script: 'Dancing Script', 'Caveat', cursive;
+  --font-heading: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* Radius */
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-pill: 9999px;
+
+  /* Transitions */
+  --transition-smooth: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Base Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ==========================================================================
+   THEME VARIATIONS (Direct scene theme switching)
+   ========================================================================== */
+
+/* Theme 1 & 2: Dark Night Celebration (Scenes 1 & 2) */
+body[data-theme="dark-night"] {
+  background: radial-gradient(circle at 50% 25%, #2a1147 0%, #170d32 55%, #0b051a 100%);
+  color: #ffffff;
+  transition: background 0.5s ease;
+}
+
+/* Theme 3, 4, 5, 6, 7, 8, 9: Light Festive Pastel (Celebration, Quiz, Videos) */
+body[data-theme="pastel-light"] {
+  background: linear-gradient(135deg, #f1e2fa 0%, #ffebf3 38%, #e0f2fe 100%);
+  color: #241442;
+  transition: background 0.5s ease;
+}
+
+/* Theme 10: Soft Blush Romantic Pink (Letter & Polaroids) */
+body[data-theme="soft-pink"] {
+  background: linear-gradient(135deg, #ffeef2 0%, #ffd9e2 50%, #fdecf0 100%);
+  color: #2c1228;
+  transition: background 0.5s ease;
+}
+
+/* Theme 11: Finale Midnight Sky with Fireworks (Final Message) */
+body[data-theme="fireworks-night"] {
+  background: radial-gradient(circle at 50% 30%, #1a082e 0%, #0d041a 60%, #06020c 100%);
+  color: #ffffff;
+  transition: background 0.5s ease;
+}
+
+/* Ambient Fullscreen Canvases */
+#particlesCanvas,
+#confettiCanvas,
+#fireworksCanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+}
+
+#particlesCanvas {
+  z-index: 1;
+}
+
+#confettiCanvas {
+  z-index: 998;
+}
+
+#fireworksCanvas {
+  z-index: 2;
+  display: none;
+}
+
+body[data-theme="fireworks-night"] #fireworksCanvas {
+  display: block;
+}
+
+/* ==========================================================================
+   APP VIEWPORT CONTAINER (Direct View, No Page Scrolling)
+   ========================================================================== */
+.app-viewport {
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 10;
+  padding: 1.5rem 1rem;
+  box-sizing: border-box;
+}
+
+/* Scene Container */
+.scene {
+  display: none;
+  width: 100%;
+  max-width: 540px;
+  margin: 0 auto;
+  opacity: 0;
+  transform: translateY(14px) scale(0.98);
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), 
+              transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  box-sizing: border-box;
+}
+
+.scene.active {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Special sizing for Letter/Polaroids multi-column screen */
+#sceneLetter.active {
+  max-width: 780px;
+}
+
+/* ==========================================================================
+   UNIVERSAL BUTTON STYLES (Rounded Pills matching reference)
+   ========================================================================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 700;
+  border-radius: var(--radius-pill);
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+/* Pink Pill Button (Welcome, Cake, Correct) */
+.btn-pink-pill {
+  background: linear-gradient(90deg, #ff4985 0%, #ff6b9d 100%);
+  color: #ffffff;
+  padding: 0.95rem 2.4rem;
+  box-shadow: 0 8px 25px var(--primary-pink-glow), 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.btn-pink-pill:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(255, 73, 133, 0.6);
+  filter: brightness(1.05);
+}
+
+/* Purple Pill Button (Quiz, Video, After Celebration, Finale) */
+.btn-purple-pill {
+  background: linear-gradient(90deg, #8c42f6 0%, #a855f7 100%);
+  color: #ffffff;
+  padding: 0.95rem 2.4rem;
+  box-shadow: 0 8px 25px var(--purple-glow), 0 2px 6px rgba(0, 0, 0, 0.12);
+}
+
+.btn-purple-pill:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(140, 66, 246, 0.6);
+  filter: brightness(1.05);
+}
+
+/* Ghost / Back Button */
+.btn-ghost {
+  background: rgba(255, 255, 255, 0.85);
+  color: #6d588a;
+  border: 1px solid rgba(140, 110, 180, 0.35);
+  padding: 0.75rem 1.6rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.btn-ghost:hover {
+  background: #ffffff;
+  color: #3b255c;
+  transform: translateY(-1px);
+}
+
+/* Button Shimmer */
+.btn-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-shimmer::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(60deg, transparent 40%, rgba(255, 255, 255, 0.35) 50%, transparent 60%);
+  transform: rotate(30deg);
+  animation: buttonShimmer 3.5s infinite;
+}
+
+@keyframes buttonShimmer {
+  0% { transform: translateX(-100%) rotate(30deg); }
+  35% { transform: translateX(100%) rotate(30deg); }
+  100% { transform: translateX(100%) rotate(30deg); }
+}
+
+/* Arrows */
+.arrow-icon {
+  font-size: 1.15rem;
+  transition: transform 0.2s ease;
+}
+
+.btn:hover .arrow-icon {
+  transform: translateX(3px);
+}
+
+/* Global Music Toggle Floating Button */
+.global-music-toggle {
+  position: fixed;
+  top: 1.25rem;
+  right: 1.25rem;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(23, 13, 50, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  padding: 0.45rem 0.9rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  transition: all 0.2s ease;
+}
+
+body[data-theme="pastel-light"] .global-music-toggle,
+body[data-theme="soft-pink"] .global-music-toggle {
+  background: rgba(255, 255, 255, 0.88);
+  color: #3b255c;
+  border: 1px solid rgba(140, 110, 180, 0.3);
+  box-shadow: 0 4px 15px rgba(120, 80, 180, 0.15);
+}
+
+.global-music-toggle:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px var(--primary-pink-glow);
+}
+
+.music-icon {
+  font-size: 0.95rem;
+}

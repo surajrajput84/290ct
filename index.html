@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Happy Birthday Mansi (Manu)! A Special Surprise For You ✨🎂</title>
+  <meta name="description" content="An interactive birthday celebration, memory quiz, video unlocks, and friendship letter.">
+  <meta name="theme-color" content="#170d32">
+
+  <!-- Google Fonts matching reference typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Dancing+Script:wght@600;700&family=Outfit:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,600;0,700;1,600;1,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Core Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/components.css">
+</head>
+<body data-theme="dark-night">
+
+  <!-- Ambient canvases for stars, confetti, and finale fireworks -->
+  <canvas id="particlesCanvas" aria-hidden="true"></canvas>
+  <canvas id="confettiCanvas" aria-hidden="true"></canvas>
+  <canvas id="fireworksCanvas" aria-hidden="true"></canvas>
+
+  <!-- Top Persistent Music Toggle Button -->
+  <button id="globalMusicBtn" class="global-music-toggle" aria-label="Toggle background music" type="button">
+    <span class="music-icon">🎵</span>
+    <span id="globalMusicLabel" class="music-label">Music</span>
+  </button>
+
+  <!-- App Viewport Container (Direct view, no page scrolling) -->
+  <div class="app-viewport">
+
+    <!-- ====================================================================
+         1. WELCOME / LANDING PAGE
+         ==================================================================== -->
+    <section id="sceneWelcome" class="scene active" aria-labelledby="welcomeHeading">
+      <!-- Fairy lights string across top -->
+      <div class="fairy-lights-garland" aria-hidden="true">
+        <span class="fairy-bulb b1"></span>
+        <span class="fairy-bulb b2"></span>
+        <span class="fairy-bulb b3"></span>
+        <span class="fairy-bulb b4"></span>
+        <span class="fairy-bulb b5"></span>
+        <span class="fairy-bulb b6"></span>
+        <span class="fairy-bulb b7"></span>
+        <span class="fairy-bulb b8"></span>
+        <span class="fairy-bulb b9"></span>
+        <span class="fairy-bulb b10"></span>
+      </div>
+
+      <!-- Floating Side Balloons -->
+      <div class="side-balloon side-balloon-left" aria-hidden="true"></div>
+      <div class="side-balloon side-balloon-right" aria-hidden="true"></div>
+
+      <!-- Centered Welcome Card Content -->
+      <div class="welcome-center-box">
+        <div class="surprise-pill">A Special Surprise For You! ✨🎉</div>
+        <div class="crown-symbol" aria-hidden="true">👑</div>
+
+        <h1 id="welcomeHeading" class="welcome-main-title">
+          <span class="cursive-prefix">Happy Birthday,</span><br>
+          <span class="friend-name-display friend-name">Mansi</span> <span class="friend-nickname-badge">(<span class="friend-nickname">Manu</span>)</span>!
+        </h1>
+
+        <p class="welcome-body-text">
+          To one of the truest and coolest friends out there—hope your birthday is as awesome, fun, and energetic as you are, Manu! ✨🎉
+        </p>
+
+        <button id="btnOpenSurprise" class="btn btn-pink-pill" type="button">
+          <span>Open Your Surprise 🎁</span>
+          <span class="arrow-icon">→</span>
+        </button>
+
+        <div class="welcome-bottom-footer">
+          Made with ✨ for the best friend ever!
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         2. BIRTHDAY CELEBRATION (CAKE & CANDLES)
+         ==================================================================== -->
+    <section id="sceneCake" class="scene" aria-labelledby="cakeHeading">
+      <div class="cake-scene-box">
+        <h2 id="cakeHeading" class="celebration-title">Blow the Candles!</h2>
+        <div class="celebration-subtitle">Make a wish... ✨</div>
+
+        <!-- 3D Realistic Cake with 5 Glowing Interactive Candles -->
+        <div class="cake-display-stage">
+          <div class="cake-visual-wrap">
+            <img src="assets/images/cake.jpg" alt="Celebration Birthday Cake" class="cake-main-image">
+            
+            <!-- 5 Interactive Candle Flames positioned on cake -->
+            <div id="cakeCandlesGroup" class="cake-candles-group">
+              <div class="interactive-candle c1" data-index="0" title="Click to blow out">
+                <span class="candle-flame"></span>
+                <span class="candle-smoke"></span>
+              </div>
+              <div class="interactive-candle c2" data-index="1" title="Click to blow out">
+                <span class="candle-flame"></span>
+                <span class="candle-smoke"></span>
+              </div>
+              <div class="interactive-candle c3" data-index="2" title="Click to blow out">
+                <span class="candle-flame"></span>
+                <span class="candle-smoke"></span>
+              </div>
+              <div class="interactive-candle c4" data-index="3" title="Click to blow out">
+                <span class="candle-flame"></span>
+                <span class="candle-smoke"></span>
+              </div>
+              <div class="interactive-candle c5" data-index="4" title="Click to blow out">
+                <span class="candle-flame"></span>
+                <span class="candle-smoke"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Wish Button -->
+        <button id="btnMakeWish" class="btn btn-pink-pill btn-shimmer" type="button">
+          <span>Make a Wish ✨</span>
+        </button>
+        <div class="cake-click-prompt">(Click to blow the candles)</div>
+
+        <!-- Bottom Birthday Song Audio Player Bar -->
+        <div class="bottom-music-bar">
+          <button id="btnBottomMute" class="music-mini-btn" type="button" aria-label="Mute or Unmute">🔊</button>
+          <div class="music-slider-track">
+            <div class="music-slider-fill" style="width: 48%;"></div>
+            <div class="music-slider-knob"></div>
+          </div>
+          <span class="music-now-playing">🎵 Birthday Song Playing...</span>
+          <button id="btnBottomPlay" class="music-mini-btn" type="button" aria-label="Song Status">🔀</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         3. AFTER CELEBRATION (LIGHT PASTEL FESTIVE THEME)
+         ==================================================================== -->
+    <section id="sceneAfterCelebration" class="scene" aria-labelledby="afterCelebHeading">
+      <!-- 3D Pastel Gift Boxes in Bottom Corners -->
+      <div class="pastel-gift-left" aria-hidden="true">
+        <img src="assets/images/gift_box.jpg" alt="Gift Box">
+      </div>
+      <div class="pastel-gift-right" aria-hidden="true">
+        <img src="assets/images/gift_box.jpg" alt="Gift Box">
+      </div>
+
+      <div class="pastel-card-wrap">
+        <div class="white-rounded-card celebration-wishes-card">
+          <h2 id="afterCelebHeading" class="festive-card-heading">🎉 Happy Birthday Mansi! 🎉</h2>
+          <p class="festive-card-text">
+            May your year ahead be packed with non-stop laughter, epic adventures, huge success, and pure happiness, Manu! Having a friend like you is pure gold! ⭐
+          </p>
+          <div class="festive-heart">🌟</div>
+        </div>
+
+        <button id="btnPlayGame" class="btn btn-purple-pill" type="button">
+          <span>Let's Play a Little Game! 🎮</span>
+          <span class="arrow-icon">→</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         4. QUIZ QUESTION (LIGHT PASTEL THEME)
+         ==================================================================== -->
+    <section id="sceneQuiz" class="scene" aria-labelledby="quizQuestionTitle">
+      <div class="quiz-container-box">
+        
+        <!-- Question Counter & Progress Track -->
+        <div class="quiz-top-info">
+          <span id="quizStepText" class="quiz-step-label">Question 1 of 4</span>
+          <span id="quizStepRatio" class="quiz-ratio-label">1/4</span>
+        </div>
+        <div class="quiz-progress-bar-bg">
+          <div id="quizProgressFill" class="quiz-progress-fill" style="width: 25%;"></div>
+        </div>
+
+        <!-- Question White Card -->
+        <div class="white-rounded-card quiz-content-card">
+          <div class="question-header-row">
+            <div class="question-circle-badge">?</div>
+            <h2 id="quizQuestionTitle" class="question-prompt">
+              Who is the don of our group?
+            </h2>
+          </div>
+
+          <!-- 4 Multiple Choice Options (A, B, C, D) -->
+          <div id="quizOptionsGrid" class="quiz-options-vertical" role="radiogroup" aria-label="Question Options">
+            <!-- Dynamically populated options with selected state & green checkmark -->
+          </div>
+        </div>
+
+        <!-- Back and Submit Controls -->
+        <!-- Back and Submit Controls -->
+        <div class="quiz-action-footer">
+          <button id="btnQuizBack" class="btn btn-ghost" type="button" style="display: none;">
+            <span>← Back</span>
+          </button>
+          <button id="btnQuizSubmit" class="btn btn-purple-pill" type="button" style="width: 100%;">
+            <span>Submit Answer</span>
+            <span class="arrow-icon">→</span>
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         5. INCORRECT ANSWER MODAL / SCREEN (LIGHT PASTEL THEME)
+         ==================================================================== -->
+    <div id="modalIncorrect" class="quiz-feedback-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+      <div class="white-rounded-card feedback-card incorrect-card">
+        <div class="feedback-emoji-face">😅</div>
+        <h3 class="feedback-title">Oops! 😅</h3>
+        <p class="feedback-subtitle">That's not the right answer!</p>
+
+        <!-- Hint Box -->
+        <div class="hint-callout-box">
+          <div class="hint-icon-tag">💡 Hint:</div>
+          <div id="quizHintBody" class="hint-copy">
+            Think about who rules the group with full boss energy! 🕶️👑
+          </div>
+        </div>
+
+        <button id="btnTryAgain" class="btn btn-purple-pill" type="button">
+          <span>Try Again 🔄</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- ====================================================================
+         6. CORRECT ANSWER SCREEN (LIGHT PASTEL THEME)
+         ==================================================================== -->
+    <section id="sceneCorrect" class="scene" aria-labelledby="correctHeading">
+      <div class="correct-answer-box">
+        <div class="big-check-circle" aria-hidden="true">
+          <span class="check-mark">✓</span>
+        </div>
+
+        <h2 id="correctHeading" class="correct-title-gradient">Correct Answer! 🎉</h2>
+        <div class="correct-subtitle">You got it right!</div>
+
+        <button id="btnWatchVideo" class="btn btn-pink-pill" type="button">
+          <span>Watch Your Surprise Video 🎬</span>
+          <span class="arrow-icon">→</span>
+        </button>
+
+        <div class="correct-tagline">Get ready for something special...</div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         7. FULLSCREEN PHOTO MEMORY UNLOCK SCREEN
+         ==================================================================== -->
+    <section id="sceneVideoUnlock" class="scene scene-fullscreen-photo" aria-labelledby="videoUnlockHeading">
+      <!-- Fullscreen Ambient Blurred Backdrop -->
+      <div class="fullscreen-photo-blur-bg" aria-hidden="true">
+        <img id="videoBlurBgPhoto" src="assets/images/image1.png" alt="">
+      </div>
+
+      <!-- Main Fullscreen Photo Viewport -->
+      <div class="fullscreen-photo-viewport">
+        <img id="videoFallbackPhoto" class="fullscreen-main-img" src="assets/images/image1.png" alt="Unlocked Memory Photo">
+      </div>
+
+      <!-- Floating Top Header Bar -->
+      <div class="fullscreen-top-bar">
+        <div class="fullscreen-badge-pill">
+          <span class="unlock-icon">📸</span>
+          <span id="videoUnlockHeading">Memory Unlocked! ✨</span>
+        </div>
+        <button id="btnContinueSurprise" class="fullscreen-skip-btn" type="button" aria-label="Skip to Next Question">
+          <span>Skip ⏭️</span>
+        </button>
+      </div>
+
+      <!-- Floating Bottom Caption & 5-Second Progress Card -->
+      <div class="fullscreen-bottom-card">
+        <p id="videoCaptionDisplay" class="fullscreen-caption-text">
+          A classic friendship memory just for you, Manu! 😂🎉
+        </p>
+
+        <div class="fullscreen-timer-row">
+          <div class="vid-track">
+            <div id="vidTrackFill" class="vid-track-fill" style="width: 0%;"></div>
+          </div>
+          <span id="vidTimeCounter" class="vid-time">0:00 / 0:05</span>
+        </div>
+        <div class="fullscreen-countdown-sub">
+          Auto-advancing to next question in <span id="photoCountdownSec">5</span>s...
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         9. FINAL FULLSCREEN PHOTO MEMORY SCREEN (AFTER QUESTION 4)
+         ==================================================================== -->
+    <section id="sceneFinalVideo" class="scene scene-fullscreen-photo" aria-labelledby="finalVideoHeading">
+      <!-- Fullscreen Ambient Blurred Backdrop -->
+      <div class="fullscreen-photo-blur-bg" aria-hidden="true">
+        <img id="finalBlurBgPhoto" src="assets/images/image4.png" alt="">
+      </div>
+
+      <!-- Main Fullscreen Photo Viewport -->
+      <div class="fullscreen-photo-viewport">
+        <img id="finalPhotoImg" class="fullscreen-main-img" src="assets/images/image4.png" alt="Final Memory Photo">
+        <div class="final-video-overlay-banner">Best friends forever, Manu! 🌟🤜🤛</div>
+      </div>
+
+      <!-- Floating Top Header Bar -->
+      <div class="fullscreen-top-bar">
+        <div class="fullscreen-badge-pill crown-badge">
+          <span class="unlock-icon">👑</span>
+          <span id="finalVideoHeading">Final Memory Surprise! 🌟</span>
+        </div>
+        <button id="btnGoToLetter" class="fullscreen-skip-btn" type="button" aria-label="Skip to Final Message">
+          <span>Skip ⏭️</span>
+        </button>
+      </div>
+
+      <!-- Floating Bottom Caption & 5-Second Progress Card -->
+      <div class="fullscreen-bottom-card">
+        <p class="fullscreen-caption-text">
+          Celebrating an awesome friendship with you, Mansi! 🔥✨
+        </p>
+
+        <div class="fullscreen-timer-row">
+          <div class="vid-track">
+            <div id="finalVidTrackFill" class="vid-track-fill" style="width: 0%;"></div>
+          </div>
+          <span id="finalVidTimeCounter" class="vid-time">0:00 / 0:05</span>
+        </div>
+        <div class="fullscreen-countdown-sub">
+          Auto-advancing to final message in <span id="finalPhotoCountdownSec">5</span>s...
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         10. FINAL BIRTHDAY LETTER & POLAROID COLLAGE
+         ==================================================================== -->
+    <section id="sceneLetter" class="scene" aria-labelledby="letterTitle">
+      <div class="letter-scene-wrapper">
+        <h2 id="letterTitle" class="letter-scene-heading">
+          One Last Surprise for You! 🎁
+        </h2>
+
+        <!-- Responsive Split: Letter on Left, Polaroid Collage on Right -->
+        <div class="letter-polaroids-split">
+          
+          <!-- Handwritten Stationery Letter -->
+          <article class="handwritten-letter-card">
+            <div class="letter-doodle-heart">⭐</div>
+            <h3 class="letter-salutation">Dear Mansi (Manu),</h3>
+            
+            <div class="letter-body-copy" id="letterBodyCopy">
+              <p>Happy Birthday, Manu! Thank you for being such an incredible friend and always bringing nonstop laughs, fun vibes, and positivity wherever you go. No matter what, you're always someone our group can count on.</p>
+              <p>Never change—stay the hilarious, supportive, and amazing best friend that you are. Here's to making countless more crazy memories together!</p>
+              <p class="letter-sign-off">Your best friend always! 🤝🎉</p>
+            </div>
+          </article>
+
+          <!-- Polaroid Memory Collage -->
+          <div class="polaroid-collage-panel">
+            <div class="polaroid-photo-item p1">
+              <div class="polaroid-pin">📌</div>
+              <img src="assets/images/image1.png" alt="Memory Photo 1">
+              <span class="polaroid-caption">Unforgettable Moments ✨</span>
+            </div>
+
+            <div class="polaroid-photo-item p2">
+              <div class="polaroid-tape"></div>
+              <img src="assets/images/image2.png" alt="Memory Photo 2">
+              <span class="polaroid-caption">Full Masti with Manu 😄</span>
+            </div>
+
+            <div class="polaroid-photo-item p3">
+              <div class="polaroid-pin">📌</div>
+              <img src="assets/images/image3.png" alt="Memory Photo 3">
+              <span class="polaroid-caption">Squad Stories 🎉</span>
+            </div>
+
+            <div class="polaroid-note-card">
+              <div class="note-pin">📌</div>
+              <div class="note-text">
+                "Count your life by smiles, not tears. Count your age by friends, not years."
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <button id="btnGoToFireworks" class="btn btn-purple-pill" type="button">
+          <span>Continue to Final Message</span>
+          <span class="arrow-icon">→</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         11. FINAL MESSAGE (NIGHT SKY & DAZZLING FIREWORKS)
+         ==================================================================== -->
+    <section id="sceneFinalMessage" class="scene" aria-labelledby="finaleHeading">
+      <div class="finale-fireworks-box">
+        <div class="crown-symbol-large" aria-hidden="true">👑</div>
+
+        <h1 id="finaleHeading" class="finale-display-heading">
+          Happy Birthday, <span class="friend-name">Mansi</span>!
+        </h1>
+        <div class="finale-nickname-glow">✨ Our Dearest Manu ✨</div>
+
+        <div class="finale-heart-glow" aria-hidden="true">🌟</div>
+
+        <p class="finale-closing-text">
+          Cheers to the best friend anyone could ever ask for, Manu! Happy Birthday! 🎉✨
+        </p>
+
+        <button id="btnReplayJourney" class="btn btn-purple-pill" type="button">
+          <span>Replay the Surprise 🔄</span>
+        </button>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="config.js"></script>
+  <script src="js/confetti.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/cake.js"></script>
+  <script src="js/video.js"></script>
+  <script src="js/quiz.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
